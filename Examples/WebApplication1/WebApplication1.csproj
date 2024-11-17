@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\NeoCaptcha.AspnetCore\NeoCaptcha.AspnetCore.csproj" />
       <ProjectReference Include="..\NeoCaptcha.AspnetCore\NeoCaptcha.AspnetCore.csproj" />
     </ItemGroup>
 
