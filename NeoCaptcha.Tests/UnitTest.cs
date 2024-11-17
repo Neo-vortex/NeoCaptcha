@@ -109,9 +109,9 @@ namespace NeoCaptcha.Tests
 
                 var captcha = new Captcha(options);
 
-                IsNotNull(captcha.ImageAsByteArray, 
+                 Assert.That (captcha.ImageAsByteArray != null, 
                     $"Captcha failed for ImageFormat: {format}");
-                IsNotEmpty(captcha.ImageAsByteArray, 
+                 Assert.That(captcha.ImageAsByteArray != null, 
                     $"Captcha image is empty for ImageFormat: {format}");
             }
         }

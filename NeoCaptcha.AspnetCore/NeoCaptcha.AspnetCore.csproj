@@ -10,9 +10,9 @@
 
     <ItemGroup>
       <PackageReference Include="Jitbit.FastCache" Version="1.1.0" />
+      <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
       <PackageReference Include="NeoCaptcha" Version="1.0.5" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection"  />
-        <PackageReference Include="Microsoft.AspNetCore" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     </ItemGroup>
 
     <ItemGroup>
