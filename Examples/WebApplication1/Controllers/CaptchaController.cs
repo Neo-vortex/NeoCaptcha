@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using NeoCaptcha;
 using NeoCaptcha.AspnetCore.Interfaces;
 
 namespace WebApplication1.Controllers;
@@ -18,7 +19,10 @@ public class CaptchaController : ControllerBase
    [HttpGet]
    public async Task<IActionResult> GenerateCaptcha()
    {
-    var captcha = await  _captchaGenerator.GenerateNewCaptcha();
+    var captcha = await  _captchaGenerator.GenerateNewCaptcha(new CaptchaOptions() with
+    {
+        IsMultiColorText = true
+    });
     Console.WriteLine(captcha.CaptchaId);
     return File(captcha.CaptchaImage, "image/png");
    }

@@ -9,8 +9,6 @@ namespace NeoCaptcha.AspnetCore
         public static IServiceCollection AddNeoCaptchaGenerator(this IServiceCollection services,
             TimeSpan expirationTime)
         {
-            // Register services for your middleware
-            // You can register your own services here
             services.AddSingleton<ICaptchaGenerator>(new NeoCaptchaManager(expirationTime));
             return services;
         }

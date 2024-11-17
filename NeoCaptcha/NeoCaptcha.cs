@@ -134,7 +134,7 @@ public class Captcha
     }
 }
 
-public class CaptchaOptions
+public record CaptchaOptions
 {
     public int CharacterCount { get; set; } = 6;
     public int Width { get; set; } = 220;

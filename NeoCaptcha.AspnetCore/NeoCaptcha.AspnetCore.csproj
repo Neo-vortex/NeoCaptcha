@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="NeoCaptcha" />
+      <PackageReference Include="NeoCaptcha" Version="1.0.3" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection"  />
         <PackageReference Include="Microsoft.AspNetCore" />
     </ItemGroup>
