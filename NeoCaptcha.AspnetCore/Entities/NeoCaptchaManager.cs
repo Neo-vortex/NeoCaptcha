@@ -34,6 +34,6 @@ public class NeoCaptchaManager(TimeSpan expirationTime) : ICaptchaGenerator
             return Task.FromResult(CaptchaValidationResult.EXPIRED);
         }
 
-        return Task.FromResult(challenge == text ? CaptchaValidationResult.OK : CaptchaValidationResult.INVALID);
+        return Task.FromResult( string.Equals(challenge , text, StringComparison.InvariantCultureIgnoreCase)  ? CaptchaValidationResult.OK : CaptchaValidationResult.INVALID);
     }
 }

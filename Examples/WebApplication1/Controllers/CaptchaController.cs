@@ -37,7 +37,6 @@ public class CaptchaController : ControllerBase
 
    [HttpPost]
    [VerifyNeoCaptcha]
-
    public async Task<IActionResult> VerifyCaptchaAttrib( [FromBody] TestModel model)
    {
        return Ok("It works!");
