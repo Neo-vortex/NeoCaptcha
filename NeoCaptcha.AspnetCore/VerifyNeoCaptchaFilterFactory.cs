@@ -1,15 +1,22 @@
 using Microsoft.AspNetCore.Mvc.Filters;
-using NeoCaptcha.AspnetCore.Attributes;
+using Microsoft.Extensions.DependencyInjection;
+using NeoCaptcha.AspnetCore;
 using NeoCaptcha.AspnetCore.Interfaces;
 
-namespace NeoCaptcha.AspnetCore;
-
-public class VerifyNeoCaptchaFilterFactory(ICaptchaGenerator captchaGenerator) : IFilterFactory
+public class VerifyNeoCaptchaFilterFactory : IFilterFactory
 {
-    public IFilterMetadata CreateInstance(IServiceProvider serviceProvider)
+    private readonly ICaptchaGenerator _captchaGenerator;
+
+    public VerifyNeoCaptchaFilterFactory(ICaptchaGenerator captchaGenerator)
     {
-        return new VerifyNeoCaptchaAttribute(captchaGenerator);
+        _captchaGenerator = captchaGenerator;
     }
 
     public bool IsReusable => false;
+
+    public IFilterMetadata CreateInstance(IServiceProvider serviceProvider)
+    {
+        // Create the filter instance, passing the required service
+        return new VerifyNeoCaptchaFilter(_captchaGenerator);
+    }
 }

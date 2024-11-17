@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.DependencyInjection;
-using NeoCaptcha.AspnetCore.Attributes;
+﻿using Microsoft.Extensions.DependencyInjection;
 using NeoCaptcha.AspnetCore.Entities;
 using NeoCaptcha.AspnetCore.Interfaces;
 
