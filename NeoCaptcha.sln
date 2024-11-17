@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoCaptcha.Tests", "NeoCapt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoCaptcha.AspnetCore", "NeoCaptcha.AspnetCore\NeoCaptcha.AspnetCore.csproj", "{8760B364-0EC5-464E-8F23-B41044F1E575}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "Examples\WebApplication1\WebApplication1.csproj", "{ABF8A161-3F2E-4DFA-8894-908859B9E3CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{8760B364-0EC5-464E-8F23-B41044F1E575}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8760B364-0EC5-464E-8F23-B41044F1E575}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8760B364-0EC5-464E-8F23-B41044F1E575}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABF8A161-3F2E-4DFA-8894-908859B9E3CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABF8A161-3F2E-4DFA-8894-908859B9E3CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABF8A161-3F2E-4DFA-8894-908859B9E3CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABF8A161-3F2E-4DFA-8894-908859B9E3CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
