@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoCaptcha", "NeoCaptcha\NeoCaptcha.csproj", "{86EF2724-6A9E-4DA2-A832-D9CC013E776F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoCaptcha.Tests", "NeoCaptcha.Tests\NeoCaptcha.Tests.csproj", "{8786E596-7245-4C3C-ABCF-9DA784F33C5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoCaptcha.AspnetCore", "..\NeoCaptcha.AspnetCore\NeoCaptcha.AspnetCore\NeoCaptcha.AspnetCore.csproj", "{A2C57F12-7960-4AFA-A9C0-AA729B2D30C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86EF2724-6A9E-4DA2-A832-D9CC013E776F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86EF2724-6A9E-4DA2-A832-D9CC013E776F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86EF2724-6A9E-4DA2-A832-D9CC013E776F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86EF2724-6A9E-4DA2-A832-D9CC013E776F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8786E596-7245-4C3C-ABCF-9DA784F33C5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8786E596-7245-4C3C-ABCF-9DA784F33C5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8786E596-7245-4C3C-ABCF-9DA784F33C5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8786E596-7245-4C3C-ABCF-9DA784F33C5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2C57F12-7960-4AFA-A9C0-AA729B2D30C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2C57F12-7960-4AFA-A9C0-AA729B2D30C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2C57F12-7960-4AFA-A9C0-AA729B2D30C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2C57F12-7960-4AFA-A9C0-AA729B2D30C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>A simple library to generate captcha images</Title>
+        <Version>1.0.1</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="SkiaSharp" Version="2.88.9" />
+      <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.9" />
+      <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.9" />
+      <PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="2.88.9" />
+      <PackageReference Include="SkiaSharp.NativeAssets.WebAssembly" Version="2.88.9" />
+      <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="2.88.9" />
+    </ItemGroup>
+
+</Project>
