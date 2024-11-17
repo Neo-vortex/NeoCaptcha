@@ -96,12 +96,28 @@ public class CaptchaController : ControllerBase
         return File(captcha.CaptchaImage, "image/png");
     }
 
-    [HttpPost]
-    public async Task<IActionResult> VerifyCaptcha([FromQuery] Guid captchaId, [FromBody] string text)
-    {
-        var result = await _captchaGenerator.ValidateCaptcha(captchaId, text);
-        return Ok(result.ToString());
-    }
+   [HttpPost]
+   [ServiceFilter(typeof(VerifyNeoCaptchaFilterFactory))]
+   public async Task<IActionResult> VerifyCaptchaAttrib( [FromBody] TestModel model)
+   {
+       return Ok("It works!");
+   }
+
+   [HttpPost]
+   public async Task<IActionResult> VerifyCaptchaManual([FromBody] TestModel model)
+   {
+       var result = await _captchaGenerator.ValidateCaptcha(model.CaptchaId, model.CaptchaChallenge);
+       if (result == CaptchaValidationResult.OK)
+       {
+           return Ok("It works!");
+       }
+       return BadRequest("captcha error");
+   }
+
+   public class  TestModel : NeoCaptchaCapableModel
+   {
+       public required string Payload { get; set; }
+   }
 }
 ```
 
