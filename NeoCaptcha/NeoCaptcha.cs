@@ -71,7 +71,22 @@ public class Captcha
 
             var x = 10 + i * charSpacing;
             var y = options.Height / 2 + paint.TextSize / 2 - 5;
+
+            // If random rotation is enabled, rotate each character
+            if (options.IsRandomRotation)
+            {
+                var rotationAngle = Random.Shared.Next(-30, 31); // Random rotation between -30 and +30 degrees
+                canvas.Save();
+                canvas.RotateDegrees(rotationAngle, x + paint.TextSize / 2, y); // Rotate around the character's center
+            }
+
             canvas.DrawText(text[i].ToString(), x, y, paint);
+
+            // Restore the canvas state after drawing the rotated character
+            if (options.IsRandomRotation)
+            {
+                canvas.Restore();
+            }
         }
     }
 
@@ -141,6 +156,7 @@ public record CaptchaOptions
     public int Height { get; set; } = 70;
     public CaptchaImageFormat ImageFormat { get; set; } = CaptchaImageFormat.PNG;
     public bool IsMultiColorText { get; set; } = false;
+    public bool IsRandomRotation { get; set; } = false; 
 }
 
 public enum CaptchaImageFormat
