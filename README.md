@@ -67,6 +67,7 @@ In the `Startup.cs` or `Program.cs` file, register NeoCaptcha as a service in th
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
+    // 5 min expiration
     services.AddNeoCaptchaGenerator(TimeSpan.FromMinutes(5));
 }
 ```
