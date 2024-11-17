@@ -178,6 +178,10 @@ public class NeoCaptchaManager : ICaptchaGenerator
 ### with multicolor
 ![image](https://github.com/user-attachments/assets/1ea0ec93-0325-48bc-80dc-080a492d91f6)
 
+### with rotaion
+![image](https://github.com/user-attachments/assets/8f1066a6-c063-4fce-9f43-d9e34978bdae)
+
+
 ---
 
 
