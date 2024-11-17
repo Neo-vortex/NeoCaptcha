@@ -50,6 +50,30 @@ public class Captcha
         };
         canvas.Clear(SKColors.White);
         canvas.DrawRect(new SKRect(0, 0, options.Width, options.Height), paint);
+
+        // Add background noise if enabled
+        if (options.IsBackgroundNoiseEnabled)
+        {
+            AddBackgroundNoise(canvas, options);
+        }
+    }
+
+    private static void AddBackgroundNoise(SKCanvas canvas, CaptchaOptions options)
+    {
+        using var paint = new SKPaint
+        {
+            IsAntialias = true,
+            StrokeWidth = 1.0f
+        };
+
+        // Add tiny multicolor dots to the background
+        for (var i = 0; i < options.Width * options.Height / 500; i++) // Adjust the density
+        {
+            paint.Color = GetRandomColor(); // Random color for each dot
+            float x = Random.Shared.Next(options.Width);
+            float y = Random.Shared.Next(options.Height);
+            canvas.DrawCircle(new SKPoint(x,y),1,paint); // Draw small dots
+        }
     }
 
     private static void DrawText(SKCanvas canvas, string text, CaptchaOptions options)
@@ -157,6 +181,7 @@ public record CaptchaOptions
     public CaptchaImageFormat ImageFormat { get; set; } = CaptchaImageFormat.PNG;
     public bool IsMultiColorText { get; set; } = false;
     public bool IsRandomRotation { get; set; } = false; 
+    public bool IsBackgroundNoiseEnabled { get; set; } = false; 
 }
 
 public enum CaptchaImageFormat
