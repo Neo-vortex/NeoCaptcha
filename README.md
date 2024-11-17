@@ -177,8 +177,4 @@ public class NeoCaptchaManager : ICaptchaGenerator
 
 ---
 
-## Conclusion
 
-NeoCaptcha provides an easy-to-use, cross-platform solution for captcha generation in your application. It supports ASP.NET Core integration, provides a range of customizable options, and helps protect your site from bots and automated abuse.
-
-For further customization and advanced usage, feel free to extend or modify the `Captcha` and `CaptchaManager` classes.
