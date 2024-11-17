@@ -36,12 +36,21 @@ public class CaptchaController : ControllerBase
 
 
    [HttpPost]
-   [ServiceFilter(typeof(VerifyNeoCaptchaFilterFactory))]
+   [VerifyNeoCaptcha]
+
    public async Task<IActionResult> VerifyCaptchaAttrib( [FromBody] TestModel model)
    {
        return Ok("It works!");
    }
 
+   [HttpPost]
+   [ServiceFilter(typeof(VerifyNeoCaptchaFilterFactory))]
+   public async Task<IActionResult> VerifyCaptchaServiceFilter( [FromBody] TestModel model)
+   {
+       return Ok("It works!");
+   }
+
+   
    [HttpPost]
    public async Task<IActionResult> VerifyCaptchaManual([FromBody] TestModel model)
    {

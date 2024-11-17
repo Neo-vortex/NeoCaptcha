@@ -12,7 +12,6 @@ public class VerifyNeoCaptchaAttribute : Attribute, IFilterFactory
 
     public IFilterMetadata CreateInstance(IServiceProvider serviceProvider)
     {
-        // Resolve ICaptchaGenerator from the service provider
         var captchaGenerator = serviceProvider.GetRequiredService<ICaptchaGenerator>();
         return new VerifyNeoCaptchaFilter(captchaGenerator);
     }
