@@ -175,6 +175,9 @@ public class NeoCaptchaManager : ICaptchaGenerator
 ## Captcha Outputs Example :
 ![image](https://github.com/user-attachments/assets/866f2bb3-7ba5-4de4-90f7-974e7c79f4d7)
 
+### with multicolor
+![image](https://github.com/user-attachments/assets/1ea0ec93-0325-48bc-80dc-080a492d91f6)
+
 ---
 
 
