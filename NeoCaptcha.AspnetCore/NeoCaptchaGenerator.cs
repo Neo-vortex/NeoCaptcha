@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.DependencyInjection;
+using NeoCaptcha.AspnetCore.Attributes;
 using NeoCaptcha.AspnetCore.Entities;
 using NeoCaptcha.AspnetCore.Interfaces;
 
@@ -10,6 +12,7 @@ namespace NeoCaptcha.AspnetCore
             TimeSpan expirationTime)
         {
             services.AddSingleton<ICaptchaGenerator>(new NeoCaptchaManager(expirationTime));
+            services.AddScoped<VerifyNeoCaptchaFilterFactory>();
             return services;
         }
     }

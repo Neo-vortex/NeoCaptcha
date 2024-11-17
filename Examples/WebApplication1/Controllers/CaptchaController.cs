@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using NeoCaptcha;
+using NeoCaptcha.AspnetCore;
+using NeoCaptcha.AspnetCore.Attributes;
+using NeoCaptcha.AspnetCore.Entities;
 using NeoCaptcha.AspnetCore.Interfaces;
 
 namespace WebApplication1.Controllers;
@@ -32,9 +35,23 @@ public class CaptchaController : ControllerBase
 
 
    [HttpPost]
-   public async Task<IActionResult> VerifyCaptcha( [FromQuery] Guid captchaId, [FromBody] string text)
+   [ServiceFilter(typeof(VerifyNeoCaptchaFilterFactory))]
+   public async Task<IActionResult> VerifyCaptchaAttrib( [FromBody] TestModel model)
    {
-       var result = await _captchaGenerator.ValidateCaptcha(captchaId, text);
-       return Ok(result.ToString());
+       return Ok("It works!");
    }
+
+   [HttpPost]
+   public async Task<IActionResult> VerifyCaptchaManual([FromBody] TestModel model)
+   {
+       var result = await _captchaGenerator.ValidateCaptcha(model.CaptchaId, model.CaptchaChallenge);
+       return Ok(result);
+   }
+
+   public class  TestModel : NeoCaptchaCapableModel
+   {
+       public required string Payload { get; set; }
+   }
+
+ 
 }
