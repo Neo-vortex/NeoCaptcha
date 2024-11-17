@@ -5,11 +5,11 @@ namespace WebApplication1.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class WeatherForecastController : ControllerBase
+public class CaptchaController : ControllerBase
 {
    private readonly ICaptchaGenerator _captchaGenerator;
 
-   public WeatherForecastController(ICaptchaGenerator captchaGenerator)
+   public CaptchaController(ICaptchaGenerator captchaGenerator)
    {
       _captchaGenerator = captchaGenerator;
    }

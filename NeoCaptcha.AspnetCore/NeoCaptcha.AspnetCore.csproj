@@ -5,10 +5,11 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>1.0.1</Version>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="NeoCaptcha" Version="1.0.1" />
+      <PackageReference Include="NeoCaptcha" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection"  />
         <PackageReference Include="Microsoft.AspNetCore" />
     </ItemGroup>

@@ -4,17 +4,16 @@ using NeoCaptcha.AspnetCore.Interfaces;
 
 namespace NeoCaptcha.AspnetCore.Entities;
 
-public class NeoCaptchaManager(int expirationTimeInSeconds) : ICaptchaGenerator
+public class NeoCaptchaManager(TimeSpan expirationTime) : ICaptchaGenerator
 {
     private readonly FastCache<Guid, string> _captchaResultHolder = new ();
-    private readonly TimeSpan _ttl = TimeSpan.FromSeconds(expirationTimeInSeconds);
 
     public Task<CaptchaGeneratorResult> GenerateNewCaptcha(CaptchaOptions captchaOptions)
     {
         var captcha = new Captcha(captchaOptions);
         var id = Guid.NewGuid();
         var result = new CaptchaGeneratorResult(id,captcha.ImageAsByteArray);
-        _captchaResultHolder.TryAdd(id, captcha.Text, _ttl);
+        _captchaResultHolder.TryAdd(id, captcha.Text, expirationTime);
         return Task.FromResult(result);
     }
 
@@ -23,7 +22,7 @@ public class NeoCaptchaManager(int expirationTimeInSeconds) : ICaptchaGenerator
         var captcha = new Captcha(new CaptchaOptions());
         var id = Guid.NewGuid();
         var result = new CaptchaGeneratorResult(id,captcha.ImageAsByteArray);
-        _captchaResultHolder.TryAdd(id, captcha.Text,_ttl);
+        _captchaResultHolder.TryAdd(id, captcha.Text,expirationTime);
         return Task.FromResult(result);
     }
 
