@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MyAspNetCoreExtensions.Enitities;
 using NeoCaptcha;
 using NeoCaptcha.AspnetCore;
 using NeoCaptcha.AspnetCore.Attributes;
@@ -45,7 +46,11 @@ public class CaptchaController : ControllerBase
    public async Task<IActionResult> VerifyCaptchaManual([FromBody] TestModel model)
    {
        var result = await _captchaGenerator.ValidateCaptcha(model.CaptchaId, model.CaptchaChallenge);
-       return Ok(result);
+       if (result == CaptchaValidationResult.OK)
+       {
+           return Ok("It works!");
+       }
+       return BadRequest("captcha error");
    }
 
    public class  TestModel : NeoCaptchaCapableModel
