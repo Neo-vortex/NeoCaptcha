@@ -104,7 +104,7 @@ public class CaptchaController : ControllerBase
 
    [HttpPost]
    [ServiceFilter(typeof(VerifyNeoCaptchaFilterFactory))]
-   public async Task<IActionResult> VerifyCaptchaAttrib( [FromBody] TestModel model)
+   public async Task<IActionResult> VerifyCaptchaAttribFilterFactory( [FromBody] TestModel model)
    {
        return Ok("It works!");
    }
