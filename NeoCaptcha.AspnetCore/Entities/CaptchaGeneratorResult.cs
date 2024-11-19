@@ -1,5 +1,5 @@
 namespace NeoCaptcha.AspnetCore.Entities;
 
-public record CaptchaGeneratorResult(Guid CaptchaId, byte[] CaptchaImage)
+public record CaptchaGeneratorResult(Guid CaptchaId, byte[] CaptchaImage, string CaptchaResult)
 {
 }

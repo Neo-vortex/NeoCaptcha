@@ -48,32 +48,48 @@ public class Captcha
                 SKShaderTileMode.Clamp
             )
         };
+
         canvas.Clear(SKColors.White);
         canvas.DrawRect(new SKRect(0, 0, options.Width, options.Height), paint);
 
-        // Add background noise if enabled
+        // Add background noise
         if (options.IsBackgroundNoiseEnabled)
         {
             AddBackgroundNoise(canvas, options);
+        }
+
+        // Apply blurring effect if enabled
+        if (options.IsBlurringEnabled)
+        {
+            ApplyBlurEffect(canvas, options);
         }
     }
 
     private static void AddBackgroundNoise(SKCanvas canvas, CaptchaOptions options)
     {
+        using var paint = new SKPaint();
+
+        for (var y = 0; y < options.Height; y++)
+        {
+            for (var x = 0; x < options.Width; x++)
+            {
+                if ((x % 3 != 0) || (y % 3 != 0)) continue; // Apply noise every 3 pixels
+                paint.Color = GetRandomGrayColor();
+                canvas.DrawPoint(x, y, paint);
+            }
+        }
+    }
+
+    private static void ApplyBlurEffect(SKCanvas canvas, CaptchaOptions options)
+    {
         using var paint = new SKPaint
         {
-            IsAntialias = true,
-            StrokeWidth = 1.0f
+            MaskFilter = SKMaskFilter.CreateBlur(SKBlurStyle.Normal, 5) // Adjust blur radius
         };
 
-        // Add tiny multicolor dots to the background
-        for (var i = 0; i < options.Width * options.Height / 500; i++) // Adjust the density
-        {
-            paint.Color = GetRandomColor(); // Random color for each dot
-            float x = Random.Shared.Next(options.Width);
-            float y = Random.Shared.Next(options.Height);
-            canvas.DrawCircle(new SKPoint(x,y),1,paint); // Draw small dots
-        }
+        // Re-draw the entire canvas with the blur applied
+        canvas.SaveLayer(paint);
+        canvas.Restore();
     }
 
     private static void DrawText(SKCanvas canvas, string text, CaptchaOptions options)
@@ -82,16 +98,18 @@ public class Captcha
 
         for (var i = 0; i < text.Length; i++)
         {
-            using var paint = new SKPaint();
-            paint.IsAntialias = true;
-            paint.TextSize = Random.Shared.Next(22, 30);
-            paint.Typeface = SKTypeface.FromFamilyName(
-                GetRandomFont(),
-                SKFontStyleWeight.SemiBold,
-                SKFontStyleWidth.ExtraCondensed,
-                SKFontStyleSlant.Italic
-            );
-            paint.Color = options.IsMultiColorText ? GetRandomColor() : SKColors.Gray;
+            using var paint = new SKPaint
+            {
+                IsAntialias = true,
+                TextSize = Random.Shared.Next(22, 30),
+                Typeface = SKTypeface.FromFamilyName(
+                    GetRandomFont(),
+                    SKFontStyleWeight.SemiBold,
+                    SKFontStyleWidth.ExtraCondensed,
+                    SKFontStyleSlant.Italic
+                ),
+                Color = options.IsMultiColorText ? GetRandomColor() : SKColors.Gray
+            };
 
             var x = 10 + i * charSpacing;
             var y = options.Height / 2 + paint.TextSize / 2 - 5;
@@ -101,7 +119,7 @@ public class Captcha
             {
                 var rotationAngle = Random.Shared.Next(-30, 31); // Random rotation between -30 and +30 degrees
                 canvas.Save();
-                canvas.RotateDegrees(rotationAngle, x + paint.TextSize / 2, y); // Rotate around the character's center
+                canvas.RotateDegrees(rotationAngle, x + paint.TextSize / 2, y);
             }
 
             canvas.DrawText(text[i].ToString(), x, y, paint);
@@ -111,14 +129,23 @@ public class Captcha
             {
                 canvas.Restore();
             }
+
+            // Apply blur to text if enabled
+            if (options.IsBlurringEnabled)
+            {
+                paint.MaskFilter = SKMaskFilter.CreateBlur(SKBlurStyle.Normal, 2);
+                canvas.DrawText(text[i].ToString(), x, y, paint);
+            }
         }
     }
 
     private static void AddNoise(SKCanvas canvas, CaptchaOptions options)
     {
-        using var paint = new SKPaint();
-        paint.IsAntialias = true;
-        paint.StrokeWidth = 1.5f;
+        using var paint = new SKPaint
+        {
+            IsAntialias = true,
+            StrokeWidth = 1.5f
+        };
 
         for (var i = 0; i < options.CharacterCount * 3; i++)
         {
@@ -180,8 +207,9 @@ public record CaptchaOptions
     public int Height { get; set; } = 70;
     public CaptchaImageFormat ImageFormat { get; set; } = CaptchaImageFormat.PNG;
     public bool IsMultiColorText { get; set; } = false;
-    public bool IsRandomRotation { get; set; } = false; 
-    public bool IsBackgroundNoiseEnabled { get; set; } = false; 
+    public bool IsRandomRotation { get; set; } = false;
+    public bool IsBackgroundNoiseEnabled { get; set; } = false;
+    public bool IsBlurringEnabled { get; set; } = false; // New option for blurring
 }
 
 public enum CaptchaImageFormat

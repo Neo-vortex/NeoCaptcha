@@ -6,6 +6,7 @@ using NeoCaptcha.AspnetCore.Interfaces;
 
 namespace NeoCaptcha.AspnetCore.Attributes;
 
+[AttributeUsage(AttributeTargets.Method)]
 public class VerifyNeoCaptchaAttribute : Attribute, IFilterFactory
 {
     public bool IsReusable => false;

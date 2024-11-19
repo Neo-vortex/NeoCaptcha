@@ -12,7 +12,7 @@ public class NeoCaptchaManager(TimeSpan expirationTime) : ICaptchaGenerator
     {
         var captcha = new Captcha(captchaOptions);
         var id = Guid.NewGuid();
-        var result = new CaptchaGeneratorResult(id,captcha.ImageAsByteArray);
+        var result = new CaptchaGeneratorResult(id,captcha.ImageAsByteArray,captcha.Text);
         _captchaResultHolder.TryAdd(id, captcha.Text, expirationTime);
         return Task.FromResult(result);
     }
@@ -21,7 +21,7 @@ public class NeoCaptchaManager(TimeSpan expirationTime) : ICaptchaGenerator
     {
         var captcha = new Captcha(new CaptchaOptions());
         var id = Guid.NewGuid();
-        var result = new CaptchaGeneratorResult(id,captcha.ImageAsByteArray);
+        var result = new CaptchaGeneratorResult(id,captcha.ImageAsByteArray,captcha.Text);
         _captchaResultHolder.TryAdd(id, captcha.Text,expirationTime);
         return Task.FromResult(result);
     }

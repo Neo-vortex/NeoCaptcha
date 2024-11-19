@@ -25,12 +25,14 @@ public class CaptchaController : ControllerBase
    {
     var captcha = await  _captchaGenerator.GenerateNewCaptcha(new CaptchaOptions() with
     {
-        IsMultiColorText = false,
-        CharacterCount = 5,
+        CharacterCount = 6,
+        ImageFormat = CaptchaImageFormat.JPG,
         IsRandomRotation = true,
-        IsBackgroundNoiseEnabled = true
+        IsBackgroundNoiseEnabled = true,
+        IsBlurringEnabled = true
     });
-    Console.WriteLine(captcha.CaptchaId);
+    //Console.WriteLine(captcha.CaptchaId);
+    Response.Headers.Append("result", captcha.CaptchaResult);
     return File(captcha.CaptchaImage, "image/png");
    }
 
