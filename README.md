@@ -18,7 +18,12 @@ NeoCaptcha generates captchas that can be used to validate user inputs, and incl
 ## Getting Started
 
 To use NeoCaptcha in your project, you can follow the steps outlined for both the base usage and integration with ASP.NET Core.
-
+```
+dotnet add package NeoCaptcha --version 1.0.8
+```
+```
+dotnet add package NeoCaptcha.AspnetCore --version 1.0.5
+```
 ---
 
 ## 1. Base Usage (Non-ASP.NET Core)
@@ -99,6 +104,13 @@ public class CaptchaController : ControllerBase
 
    [HttpPost]
    [ServiceFilter(typeof(VerifyNeoCaptchaFilterFactory))]
+   public async Task<IActionResult> VerifyCaptchaAttribFilterFactory( [FromBody] TestModel model)
+   {
+       return Ok("It works!");
+   }
+
+   [HttpPost]
+   [VerifyNeoCaptcha]
    public async Task<IActionResult> VerifyCaptchaAttrib( [FromBody] TestModel model)
    {
        return Ok("It works!");
@@ -187,6 +199,13 @@ public class NeoCaptchaManager : ICaptchaGenerator
         return Task.FromResult(challenge == text ? CaptchaValidationResult.OK : CaptchaValidationResult.INVALID);
     }
 }
+```
+## Using in Docker env :
+Make sure you have "libfontconfig1" installed : 
+```
+RUN apt-get update \
+&& apt-get install -y --no-install-recommends libfontconfig1 \
+&& rm -rf /var/lib/apt/lists/*
 ```
 
 ## Captcha Outputs Example :
