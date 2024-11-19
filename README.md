@@ -217,8 +217,8 @@ RUN apt-get update \
 ### with rotaion
 ![image](https://github.com/user-attachments/assets/8f1066a6-c063-4fce-9f43-d9e34978bdae)
 
-### with random background circules
-![image](https://github.com/user-attachments/assets/ba2c21fb-becc-4843-a8d3-635f093a68bb)
+### With Blur and Background Noise
+![image](https://github.com/user-attachments/assets/58edfefd-943e-4eca-b9ca-f86b220afbfb)
 
 ---
 
