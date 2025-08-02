@@ -19,10 +19,10 @@ NeoCaptcha generates captchas that can be used to validate user inputs, and incl
 
 To use NeoCaptcha in your project, you can follow the steps outlined for both the base usage and integration with ASP.NET Core.
 ```
-dotnet add package NeoCaptcha --version 1.0.8
+dotnet add package NeoCaptcha 
 ```
 ```
-dotnet add package NeoCaptcha.AspnetCore --version 1.0.5
+dotnet add package NeoCaptcha.AspnetCore 
 ```
 ---
 
