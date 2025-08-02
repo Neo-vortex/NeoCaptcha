@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>A simple library to generate captcha images</Title>
-        <Version>1.0.10</Version>
+        <Version>1.0.15</Version>
     </PropertyGroup>
 
     <ItemGroup>
