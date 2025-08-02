@@ -27,7 +27,7 @@ public class Captcha
 
         DrawBackground(canvas, options);
         DrawText(canvas, text, options);
-        AddNoise(canvas, options);
+        if (options.UseRandomLineNoise) AddNoise(canvas, options);
 
         using var image = surface.Snapshot();
         using var data = image.Encode(
@@ -209,7 +209,8 @@ public record CaptchaOptions
     public bool IsMultiColorText { get; set; } = false;
     public bool IsRandomRotation { get; set; } = false;
     public bool IsBackgroundNoiseEnabled { get; set; } = false;
-    public bool IsBlurringEnabled { get; set; } = false; // New option for blurring
+    public bool IsBlurringEnabled { get; set; } = false;
+    public bool UseRandomLineNoise { get; set; } = true;
 }
 
 public enum CaptchaImageFormat

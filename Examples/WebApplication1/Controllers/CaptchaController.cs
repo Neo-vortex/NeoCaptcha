@@ -29,7 +29,8 @@ public class CaptchaController : ControllerBase
         ImageFormat = CaptchaImageFormat.JPG,
         IsRandomRotation = true,
         IsBackgroundNoiseEnabled = true,
-        IsBlurringEnabled = true
+        IsBlurringEnabled = true,
+        UseRandomLineNoise = false
     });
     //Console.WriteLine(captcha.CaptchaId);
     Response.Headers.Append("result", captcha.CaptchaResult);
