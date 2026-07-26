@@ -1,4 +1,4 @@
-namespace MyAspNetCoreExtensions.Enitities;
+namespace NeoCaptcha.AspnetCore.Enums;
 
 public enum CaptchaValidationResult
 {

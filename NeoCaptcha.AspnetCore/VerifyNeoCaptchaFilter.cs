@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using MyAspNetCoreExtensions.Enitities;
+using NeoCaptcha.AspnetCore.Enums;
 using NeoCaptcha.AspnetCore.Entities;
 using NeoCaptcha.AspnetCore.Interfaces;
 

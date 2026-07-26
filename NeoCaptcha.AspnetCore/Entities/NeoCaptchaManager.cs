@@ -1,5 +1,5 @@
 using Jitbit.Utils;
-using MyAspNetCoreExtensions.Enitities;
+using NeoCaptcha.AspnetCore.Enums;
 using NeoCaptcha.AspnetCore.Interfaces;
 
 namespace NeoCaptcha.AspnetCore.Entities;

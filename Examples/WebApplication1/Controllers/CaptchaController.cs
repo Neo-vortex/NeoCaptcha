@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using MyAspNetCoreExtensions.Enitities;
+using NeoCaptcha.AspnetCore.Enums;
 using NeoCaptcha;
 using NeoCaptcha.AspnetCore;
 using NeoCaptcha.AspnetCore.Attributes;

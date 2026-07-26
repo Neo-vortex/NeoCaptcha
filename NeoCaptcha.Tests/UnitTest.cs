@@ -134,5 +134,95 @@ namespace NeoCaptcha.Tests
                 Captcha.ImageHelper.SaveImageToFile(null!, "test.png"),
                 "Expected exception for null image bytes.");
         }
+
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void Captcha_ThrowsException_WhenCharacterCountIsNotPositive(int characterCount)
+        {
+            var options = GetDefaultOptions();
+            options.CharacterCount = characterCount;
+
+            Throws<ArgumentOutOfRangeException>(() => new Captcha(options),
+                "Expected exception for non-positive CharacterCount.");
+        }
+
+        [TestCase(0)]
+        [TestCase(-10)]
+        public void Captcha_ThrowsException_WhenWidthIsNotPositive(int width)
+        {
+            var options = GetDefaultOptions();
+            options.Width = width;
+
+            Throws<ArgumentOutOfRangeException>(() => new Captcha(options),
+                "Expected exception for non-positive Width.");
+        }
+
+        [TestCase(0)]
+        [TestCase(-10)]
+        public void Captcha_ThrowsException_WhenHeightIsNotPositive(int height)
+        {
+            var options = GetDefaultOptions();
+            options.Height = height;
+
+            Throws<ArgumentOutOfRangeException>(() => new Captcha(options),
+                "Expected exception for non-positive Height.");
+        }
+
+        [Test]
+        public void Captcha_ProducesValidImage_WhenBlurringIsEnabled()
+        {
+            var options = GetDefaultOptions();
+            options.IsBlurringEnabled = true;
+
+            var captcha = new Captcha(options);
+
+            using var image = SKBitmap.Decode(captcha.ImageAsByteArray);
+            That(image, Is.Not.Null, "Blurred captcha did not produce a decodable image.");
+            That(image!.Width, Is.EqualTo(options.Width));
+            That(image.Height, Is.EqualTo(options.Height));
+        }
+
+        [Test]
+        public void Captcha_ProducesValidImage_WhenBackgroundNoiseAndBlurCombined()
+        {
+            var options = GetDefaultOptions();
+            options.IsBlurringEnabled = true;
+            options.IsBackgroundNoiseEnabled = true;
+
+            var captcha = new Captcha(options);
+
+            using var image = SKBitmap.Decode(captcha.ImageAsByteArray);
+            That(image, Is.Not.Null,
+                "Captcha with blur + background noise did not produce a decodable image.");
+        }
+
+        [Test]
+        public void Captcha_ProducesValidImage_WhenMultiColorTextEnabled()
+        {
+            var options = GetDefaultOptions();
+            options.IsMultiColorText = true;
+
+            var captcha = new Captcha(options);
+
+            using var image = SKBitmap.Decode(captcha.ImageAsByteArray);
+            That(image, Is.Not.Null, "Multi-color captcha did not produce a decodable image.");
+        }
+
+        [Test]
+        public void Captcha_GeneratesDifferentText_AcrossRepeatedCalls()
+        {
+            // Also exercises the cached-typeface path across many rapid Captcha
+            // instantiations without throwing or hanging.
+            var options = GetDefaultOptions();
+            var seenTexts = new HashSet<string>();
+
+            for (var i = 0; i < 20; i++)
+            {
+                seenTexts.Add(new Captcha(options).Text);
+            }
+
+            That(seenTexts.Count, Is.GreaterThan(1),
+                "Expected randomized captcha text to vary across repeated generations.");
+        }
     }
 }

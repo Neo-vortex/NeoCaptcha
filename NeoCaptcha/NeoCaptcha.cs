@@ -6,8 +6,19 @@ public class Captcha
 {
     public Captcha(CaptchaOptions options)
     {
+        ValidateOptions(options);
         Text = GenerateRandomText(options.CharacterCount).ToUpperInvariant();
         ImageAsByteArray = CreateCaptchaImage(Text, options);
+    }
+
+    private static void ValidateOptions(CaptchaOptions options)
+    {
+        if (options.CharacterCount <= 0)
+            throw new ArgumentOutOfRangeException(nameof(options), "CharacterCount must be greater than zero.");
+        if (options.Width <= 0)
+            throw new ArgumentOutOfRangeException(nameof(options), "Width must be greater than zero.");
+        if (options.Height <= 0)
+            throw new ArgumentOutOfRangeException(nameof(options), "Height must be greater than zero.");
     }
 
     public string Text { get; }
@@ -38,7 +49,7 @@ public class Captcha
 
     private static void DrawBackground(SKCanvas canvas, CaptchaOptions options)
     {
-        using var paint = new SKPaint
+        using var gradientPaint = new SKPaint
         {
             Shader = SKShader.CreateLinearGradient(
                 new SKPoint(0, 0),
@@ -50,18 +61,29 @@ public class Captcha
         };
 
         canvas.Clear(SKColors.White);
-        canvas.DrawRect(new SKRect(0, 0, options.Width, options.Height), paint);
 
-        // Add background noise
+        // SaveLayer's paint (with the blur mask filter) only affects content
+        // drawn between SaveLayer and the matching Restore. Previously nothing
+        // was drawn in between, so the blur had no visible effect at all.
+        int? layerCount = null;
+        SKPaint? blurPaint = null;
+        if (options.IsBlurringEnabled)
+        {
+            blurPaint = new SKPaint { MaskFilter = SKMaskFilter.CreateBlur(SKBlurStyle.Normal, 5) };
+            layerCount = canvas.SaveLayer(blurPaint);
+        }
+
+        canvas.DrawRect(new SKRect(0, 0, options.Width, options.Height), gradientPaint);
+
         if (options.IsBackgroundNoiseEnabled)
         {
             AddBackgroundNoise(canvas, options);
         }
 
-        // Apply blurring effect if enabled
-        if (options.IsBlurringEnabled)
+        if (layerCount.HasValue)
         {
-            ApplyBlurEffect(canvas, options);
+            canvas.RestoreToCount(layerCount.Value);
+            blurPaint!.Dispose();
         }
     }
 
@@ -80,18 +102,6 @@ public class Captcha
         }
     }
 
-    private static void ApplyBlurEffect(SKCanvas canvas, CaptchaOptions options)
-    {
-        using var paint = new SKPaint
-        {
-            MaskFilter = SKMaskFilter.CreateBlur(SKBlurStyle.Normal, 5) // Adjust blur radius
-        };
-
-        // Re-draw the entire canvas with the blur applied
-        canvas.SaveLayer(paint);
-        canvas.Restore();
-    }
-
     private static void DrawText(SKCanvas canvas, string text, CaptchaOptions options)
     {
         var charSpacing = options.Width / (float)text.Length;
@@ -102,12 +112,7 @@ public class Captcha
             {
                 IsAntialias = true,
                 TextSize = Random.Shared.Next(22, 30),
-                Typeface = SKTypeface.FromFamilyName(
-                    GetRandomFont(),
-                    SKFontStyleWeight.SemiBold,
-                    SKFontStyleWidth.ExtraCondensed,
-                    SKFontStyleSlant.Italic
-                ),
+                Typeface = GetCachedTypeface(GetRandomFont()),
                 Color = options.IsMultiColorText ? GetRandomColor() : SKColors.Gray
             };
 
@@ -177,6 +182,22 @@ public class Captcha
     {
         string[] fonts = { "Arial", "Courier New", "Calibri", "Tahoma" };
         return fonts[Random.Shared.Next(fonts.Length)];
+    }
+
+    // SKTypeface.FromFamilyName hits the underlying font system (fontconfig on
+    // Linux) on every call. That was happening once per character, per captcha,
+    // which adds unnecessary latency under load. Typefaces are immutable and
+    // safe to share/cache for the process lifetime.
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, SKTypeface> TypefaceCache = new();
+
+    private static SKTypeface GetCachedTypeface(string fontFamily)
+    {
+        return TypefaceCache.GetOrAdd(fontFamily, static family => SKTypeface.FromFamilyName(
+            family,
+            SKFontStyleWeight.SemiBold,
+            SKFontStyleWidth.ExtraCondensed,
+            SKFontStyleSlant.Italic
+        ));
     }
 
     public static class ImageHelper

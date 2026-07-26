@@ -1,4 +1,4 @@
-using MyAspNetCoreExtensions.Enitities;
+using NeoCaptcha.AspnetCore.Enums;
 using NeoCaptcha.AspnetCore.Entities;
 
 namespace NeoCaptcha.AspnetCore.Interfaces;
