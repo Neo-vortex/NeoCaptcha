@@ -28,7 +28,7 @@ jobs:
 
     - name: Pack
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      run: dotnet pack NeoCaptcha.sln --no-build --configuration Release --output ./nupkgs
+      run: dotnet pack NeoCaptcha.sln --no-build --configuration Release --output ./nupkgs -p:VersionSuffix= -p:Version=$(dotnet msbuild NeoCaptcha/NeoCaptcha.csproj -getProperty:VersionPrefix).${{ github.run_number }}
 
     - name: Push to NuGet
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
